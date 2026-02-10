@@ -6,7 +6,7 @@
 /*   By: jinliang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/09 12:39:17 by jinliang          #+#    #+#             */
-/*   Updated: 2026/02/09 17:01:17 by jinliang         ###   ########.fr       */
+/*   Updated: 2026/02/10 19:32:24 by jinliang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,49 +16,79 @@ t_token	*lexer(char *input)
 {
 	int		i;
 	t_token	*tokens;
+	t_quote	quote;
 
 	i = 0;
 	tokens = NULL;
+	quote = Q_NONE;
 	while (input[i])
 	{
 		if (is_whitespace(input[i]))
+		{
 			i++;
-		else if (input[i] == '|')
-			token_add_back(&tokens, new_token(PIPE, strndup("|", 1))), i++;
-		else if (input[i] == '<')
-			token_add_back(&tokens, new_token(REDIR_IN, strndup("<", 1))), i++;
-		else if (input[i] == '>')
-			token_add_back(&tokens, new_token(REDIR_OUT, strndup(">", 1))), i++;
-		else if (input[i] == '<' && input[i + 1] == '<')
-			token_add_back(&tokens, new_token(HEREDOC, strndup("<<", 2))), i += 2;
-		else if (input[i] == '>' && input[i + 1] == '>')
-			token_add_back(&tokens, new_token(REDIR_APPEND, strndup(">>", 2))), i += 2;
+			continue ;
+		}
+		if (!input[i])
+			break ;
+		if (is_operator(input[i]))
+			create_operator_token(&tokens, input, &i);
 		else
-			token_add_back(&tokens, new_token(WORD, extract_word(input, &i)));
+			token_add_back(&tokens,
+				new_token(WORD, extract_word(input, &i, quote), Q_NONE));
 	}
 	return (tokens);
 }
 
-char	*extract_word(char *str, int *i)
+void	*create_operator_token(t_token **tokens, char *input, int *i)
 {
-	int		start;
-	char	quote;
-
-	start = *i;
-	quote = 0;
-	while (str[*i])
+	if (input[*i] == '<' && input[*i + 1] == '<')
 	{
-		if (!quote && (is_whitespace(str[*i]) || is_special(str[*i])))
-			break;
-		if (str[*i] == '\'' || str[*i] == '"')
-		{
-			quote = str[*i];
-			(*i)++;
-			start = *i;
-			while (str[*i] && str[*i] != quote)
-				(*i)++;
-		}
+		token_add_back(tokens, new_token(HEREDOC, ft_strndup("<<", 2), Q_NONE));
+		*i += 2;
+	}
+	else if (input[*i] == '>' && input[*i + 1] == '>')
+	{
+		token_add_back(tokens, new_token(REDIR_APPEND, ft_strndup(">>", 2), Q_NONE));
+		*i += 2;
+	}
+	else if (input[*i] == '|')
+	{
+		token_add_back(tokens, new_token(PIPE, ft_strndup("|", 1), Q_NONE));
 		(*i)++;
 	}
-	return (strndup(str + start, *i - start));
+	else if (input[*i] == '<')
+	{
+		token_add_back(tokens, new_token(REDIR_IN, ft_strndup("<", 1), Q_NONE));
+		(*i)++;
+	}
+	else if (input[*i] == '>')
+	{
+		token_add_back(tokens, new_token(REDIR_OUT, ft_strndup(">", 1), Q_NONE));
+		(*i)++;
+	}
+}
+
+char	*extract_word(char *s, int *i, t_quote *quote)
+{
+	int		start;
+	char	q;
+
+	start = *i;
+	q = 0;
+	*quote = Q_NONE;
+	if (s[*i] == '\'' || s[*i] == '"')
+	{
+		q = s[*i];
+		if (q == '\'')
+			*quote = Q_SINGLE;
+		else if (q == '"')
+			*quote = Q_DOUBLE;
+		start = ++(*i);
+		while (s[*i] && s[*i] != q)
+			(*i)++;
+		return (ft_strndup(s + start, *i - start));
+	}
+	while (s[*i] && is_whitespace(s[*i]) && !is_operator(s[*i]))
+        (*i)++;
+    return ft_strndup(s + start, *i - start);
 }
