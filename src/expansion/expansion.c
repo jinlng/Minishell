@@ -6,7 +6,7 @@
 /*   By: jinliang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 19:18:58 by jinliang          #+#    #+#             */
-/*   Updated: 2026/02/11 22:27:38 by jinliang         ###   ########.fr       */
+/*   Updated: 2026/02/13 19:57:34 by jinliang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ char	*expand_str(char *str, t_env *env)
 			i++;
 		}
 	}
-	free(str);
+	// free(str);
 	return (res);
 }
 

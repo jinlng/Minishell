@@ -6,7 +6,7 @@
 /*   By: jinliang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 14:57:37 by potabaga          #+#    #+#             */
-/*   Updated: 2026/02/13 19:06:20 by jinliang         ###   ########.fr       */
+/*   Updated: 2026/02/13 19:54:32 by jinliang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ extern int	g_exit_status;
 
 typedef struct s_env
 {
-	char	**env;
-	int		last_status;
+	char			**env;
+	int				last_status;
 	char			*key;
 	char			*value;
 	int				exported;
@@ -88,7 +88,7 @@ typedef struct s_redir
 typedef struct	s_cmd
 {
 	char			**argv;
-	t_token			*token;
+	// t_token			*token;
 	t_redir			*redir;
 	int				pipe_out;
 	struct s_cmd	*next;
@@ -129,7 +129,10 @@ void	handle_word(t_cmd *cur, t_token *tok);
 int		handle_pipe(t_cmd **cur);
 int		handle_redir(t_cmd *cur, t_token **tok);
 
-
+/* heredoc*/
+int	process_heredocs(t_cmd *cmd);
+int	prepare_heredoc(t_redir *r);
+void	heredoc_child(int fd[2], t_redir *r);
 
 /* builtin functions */
 int	builtin_echo(char **argv, t_env **env);
@@ -146,14 +149,10 @@ int		exec_builtin(t_cmd *cmd, t_env **env);
 
 
 /* signal */
-void	sigint_handler(int sig);
-void	handle_sigint_in_heredoc(int sig);
+void heredoc_sigint(int sig);
 void	sigint_heredoc(int sig);
-
-int		process_heredocs(t_cmd *cmd);
-int		prepare_heredoc(t_redir *r);
-void	heredoc_child(int fd[2], t_redir *r);
-
+void sigint_handler(int sig);
+void setup_signals(void);
 
 /* exacution */
 void	execute(t_cmd *cmd, t_env *env);
@@ -202,8 +201,8 @@ int	perror_msg(char *prefix, char *arg);
 
 
 
-
-
+/* main */
+void execute_line(char *line, t_env *env);
 
 
 

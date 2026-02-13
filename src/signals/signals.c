@@ -6,7 +6,7 @@
 /*   By: jinliang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 17:05:24 by jinliang          #+#    #+#             */
-/*   Updated: 2026/02/13 19:07:57 by jinliang         ###   ########.fr       */
+/*   Updated: 2026/02/13 19:29:49 by jinliang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,19 @@ void setup_signals(void)
 {
     struct sigaction sa;
 
-    sa.sa_handler = sigint_handler;
+    sa.sa_handler = sigint_handler;  // 确保 sigint_handler 是 void f(int)
     sigemptyset(&sa.sa_mask);
     sa.sa_flags = SA_RESTART;
-    sigaction(SIGINT, &sa, NULL);
-    signal(SIGQUIT, SIG_IGN);
+
+    if (sigaction(SIGINT, &sa, NULL) == -1)
+        perror("sigaction");
+
+    // 忽略 quit
+    struct sigaction sa_quit;
+    sa_quit.sa_handler = SIG_IGN;
+    sigemptyset(&sa_quit.sa_mask);
+    sa_quit.sa_flags = 0;
+    if (sigaction(SIGQUIT, &sa_quit, NULL) == -1)
+        perror("sigaction");
 }
+

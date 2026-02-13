@@ -6,7 +6,7 @@
 /*   By: jinliang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/08 19:35:45 by jinliang          #+#    #+#             */
-/*   Updated: 2026/02/12 18:45:05 by jinliang         ###   ########.fr       */
+/*   Updated: 2026/02/13 19:53:14 by jinliang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_cmd	*init_cmd(void)
 	if (!cmd)
 		return (NULL);
 	cmd->argv = NULL;
-	cmd->token = NULL;
+	// cmd->token = NULL;
 	cmd->redir = NULL;
 	cmd->pipe_out = 0;
 	cmd->next = NULL;
