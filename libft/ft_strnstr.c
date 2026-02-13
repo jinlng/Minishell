@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: potabaga <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jinliang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/16 15:30:34 by potabaga          #+#    #+#             */
-/*   Updated: 2025/05/16 16:47:18 by potabaga         ###   ########.fr       */
+/*   Created: 2025/04/28 16:45:55 by jinliang          #+#    #+#             */
+/*   Updated: 2025/05/13 16:07:55 by jinliang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,35 +17,20 @@ char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 	size_t	i;
 	size_t	j;
 
-	i = 0;
-	j = 0;
-	if (*needle == '\0')
+	if (!*needle)
 		return ((char *)haystack);
-	while (haystack[i] != '\0' && i < len)
+	if ((!haystack || !needle) && len == 0)
+		return (NULL);
+	i = 0;
+	while (haystack[i] && i < len)
 	{
 		j = 0;
-		while (needle[j] != '\0'
-			&& haystack[i + j] != '\0'
-			&& (i + j) < len
-			&& haystack [i + j] == needle [j])
-		{
+		while (haystack[i + j] == needle[j] && \
+			haystack[i + j] && needle[j] && i + j < len)
 			j++;
-		}
-		if (needle [j] == '\0')
-			return ((char *)&haystack [i]);
+		if (!needle[j])
+			return ((char *)haystack + i);
 		i++;
 	}
 	return (NULL);
 }
-
-/*
-int	main()
-{
-	char haystack[] = "to go too foodvdsvsdvsdvsdvsdvs";
-	char needle[] = "too";
-	char *result;
-
-	result = ft_strnstr(haystack, needle, 22);
-	printf("Application: %s\n", result);
-	return (0);
-}*/

@@ -3,47 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: potabaga <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jinliang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/16 18:06:32 by potabaga          #+#    #+#             */
-/*   Updated: 2025/05/16 18:22:43 by potabaga         ###   ########.fr       */
+/*   Created: 2025/04/24 19:02:45 by jinliang          #+#    #+#             */
+/*   Updated: 2025/05/13 15:51:11 by jinliang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
 
 size_t	ft_strlcat(char *dst, const char *src, size_t size)
 {
-	size_t			i;
-	size_t			y;
-	unsigned int	result;
+	size_t	i;
+	size_t	len_d;
+	size_t	len_s;
 
 	i = 0;
-	y = 0;
-	result = 0;
-	while (dst[i] != '\0')
-		i++;
-	while (src[result] != '\0')
-		result++;
-	if (size <= i)
-		result = result + size ;
-	else
-		result = result + i;
-	while (src[y] != '\0' && (i + 1) < size)
+	len_d = ft_strlen(dst);
+	len_s = ft_strlen(src);
+	if (size <= len_d)
+		return (size + len_s);
+	while (src[i] && (len_d + i < size - 1))
 	{
-		dst[i] = src[y];
+		dst[len_d + i] = src[i];
 		i++;
-		y++;
 	}
-	if (size > 0)
-	dst[i] = '\0';
-	return (result);
+	dst[len_d + i] = '\0';
+	return (len_d + len_s);
 }
-
-/*int main()
-{
-	char dst[] = "amour";
-	char src[] = "pour la vie";
-	int size = 5;
-	printf("%d\n", ft_strlcat(dst, src, size));
-	return (0);
-}*/

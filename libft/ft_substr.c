@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: potabaga <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jinliang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/19 16:12:43 by potabaga          #+#    #+#             */
-/*   Updated: 2025/05/20 17:04:18 by potabaga         ###   ########.fr       */
+/*   Created: 2025/05/12 15:06:21 by jinliang          #+#    #+#             */
+/*   Updated: 2025/05/13 17:56:25 by jinliang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,34 +14,21 @@
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	char	*substr;
-	size_t	i;
+	char	*sub;
+	size_t	s_len;
+	size_t	sub_len;
 
-	i = 0;
 	if (!s)
 		return (NULL);
-	if (start >= ft_strlen(s))
+	s_len = ft_strlen(s);
+	if (start >= s_len)
 		return (ft_strdup(""));
-	if (ft_strlen(s + start) < len)
-		len = ft_strlen(s + start);
-	substr = (char *) malloc(sizeof(char) * (len + 1));
-	if (!substr)
+	sub_len = ft_strlen(s + start);
+	if (sub_len > len)
+		sub_len = len;
+	sub = (char *)malloc(sub_len + 1);
+	if (!sub)
 		return (NULL);
-	while (i < len && s[start + i])
-	{
-		substr[i] = s[start + i];
-		i++;
-	}
-	substr[i] = '\0';
-	return (substr);
+	ft_strlcpy(sub, s + start, sub_len + 1);
+	return (sub);
 }
-/*
-int	main()
-{
-	const char *original = "blabla";
-	char *sub;
-	sub = ft_substr(original, 0, 5);
-	printf("%s\n", sub);
-	free (sub);
-	return (0);
-}*/

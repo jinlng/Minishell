@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: potabaga <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jinliang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/12 17:38:59 by potabaga          #+#    #+#             */
-/*   Updated: 2025/05/21 10:33:59 by potabaga         ###   ########.fr       */
+/*   Created: 2025/04/25 16:02:50 by jinliang          #+#    #+#             */
+/*   Updated: 2025/05/13 17:55:47 by jinliang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,16 @@
 
 void	*ft_memchr(const void *s, int c, size_t n)
 {
-	const unsigned char	*ptr;
+	size_t				i;
+	const unsigned char	*p;
 
-	ptr = (const unsigned char *)s;
-	while (n-- > 0)
+	i = 0;
+	p = (const unsigned char *)s;
+	while (i < n)
 	{
-		if (*ptr == (unsigned char) c)
-		{
-			return ((void *)ptr);
-		}
-		ptr++;
+		if (p[i] == (unsigned char)c)
+			return ((void *)(p + i));
+		i++;
 	}
 	return (NULL);
 }
-/*
-int 	main()
-{
-	char a[] = "blabla";
-	char *result = ft_memchr(a, 'x', 5);
-	if (result != NULL)
-		printf("symbole: %c\n", *result);
-	else
-		printf("Pas de symbole\n");
-	return (0);
-}*/

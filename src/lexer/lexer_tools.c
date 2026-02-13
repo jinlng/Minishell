@@ -6,7 +6,7 @@
 /*   By: jinliang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/09 12:38:58 by jinliang          #+#    #+#             */
-/*   Updated: 2026/02/10 17:42:25 by jinliang         ###   ########.fr       */
+/*   Updated: 2026/02/11 19:15:03 by jinliang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,16 @@ int	is_operator(char c)
 
 t_token	*new_token(t_token_type type, char *value, t_quote quote)
 {
-    t_token *t;
+    t_token	*new;
 
-	t = malloc(sizeof(t_token));
-    if (!t)
-        return (NULL);
-    t->type = type;
-    t->value = value;
-	t->quote = quote;
-    t->next = NULL;
-    return (t);
+	new = malloc(sizeof(t_token));
+	if (!new)
+		return (NULL);
+	new->type = type;
+	new->value = value;
+	new->quote = quote;
+	new->next = NULL;
+	return (new);
 }
 
 void	token_add_back(t_token **lst, t_token *new)
@@ -49,4 +49,32 @@ void	token_add_back(t_token **lst, t_token *new)
     while (tmp->next)
         tmp = tmp->next;
     tmp->next = new;
+}
+
+void	*create_operator_token(t_token **tokens, char *input, int *i)
+{
+	if (input[*i] == '|')
+		token_add_back(tokens, new_token(PIPE, ft_strdup("|"), Q_NONE));
+	else if (input[*i] == '<')
+	{
+		if (input[*i + 1] == '<')
+		{
+			token_add_back(tokens, new_token(HEREDOC, ft_strdup("<<"), Q_NONE));
+			(*i)++;
+		}
+		else
+			token_add_back(tokens, new_token(REDIR_IN, ft_strdup("<"), Q_NONE));
+	}
+	else if (input[*i] == '>')
+	{
+		if (input[*i + 1] == '>')
+		{
+			token_add_back(tokens, new_token(REDIR_APPEND, ft_strdup(">>"), Q_NONE));
+			(*i)++;
+		}
+		else
+			token_add_back(tokens, new_token(REDIR_OUT, ft_strdup(">"), Q_NONE));
+	}
+	(*i)++;
+	return (NULL);
 }

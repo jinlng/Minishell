@@ -3,41 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: potabaga <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jinliang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/19 14:15:35 by potabaga          #+#    #+#             */
-/*   Updated: 2025/05/20 15:50:34 by potabaga         ###   ########.fr       */
+/*   Created: 2025/05/12 14:50:44 by jinliang          #+#    #+#             */
+/*   Updated: 2025/05/12 15:00:34 by jinliang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_calloc(size_t n, size_t m)
+void	*ft_calloc(size_t number, size_t size)
 {
-	void	*ptr;
+	void	*array;
 
-	ptr = malloc (n * m);
-	if (ptr == NULL)
+	array = malloc(number * size);
+	if (!array)
 		return (NULL);
-	ft_bzero(ptr, n * m);
-	return (ptr);
+	ft_bzero(array, number * size);
+	return (array);
 }
-/*
-int	main()
-{
-	int *arr;
-	int i = 0;
-	arr = (int *)ft_calloc(5, sizeof(int));
-	if (arr == NULL)
-	{
-		printf("Erreur\n");
-		return (1);
-	}
-	while (i < 5)
-	{
-		printf("arr[%d] = %d\n", i, arr[i]);
-		i++;
-	}
-	free(arr);
-	return (0);
-*/

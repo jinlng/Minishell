@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isascii.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: potabaga <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jinliang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/06 16:24:15 by potabaga          #+#    #+#             */
-/*   Updated: 2025/05/06 16:46:30 by potabaga         ###   ########.fr       */
+/*   Created: 2025/04/24 18:33:06 by jinliang          #+#    #+#             */
+/*   Updated: 2025/04/24 18:33:32 by jinliang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,5 @@
 
 int	ft_isascii(int c)
 {
-	if (c >= 0 && c <= 127)
-		return (1);
-	else
-		return (0);
+	return (c >= 0 && c <= 127);
 }
-/*
-int	main()
-{
-	int a = 'b';
-	int b = ' ';
-	printf("%d\n", ft_isascii(a));
-	printf("%d\n", ft_isascii(b));
-	return (0);
-}*/

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: potabaga <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jinliang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/22 14:58:19 by potabaga          #+#    #+#             */
-/*   Updated: 2025/05/22 15:01:09 by potabaga         ###   ########.fr       */
+/*   Created: 2025/05/12 16:18:50 by jinliang          #+#    #+#             */
+/*   Updated: 2025/05/12 16:57:10 by jinliang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	char	*res;
-	size_t	i;
+	char			*res;
+	unsigned int	i;
 
 	if (!s || !f)
 		return (NULL);

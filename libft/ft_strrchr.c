@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: potabaga <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jinliang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/16 14:20:49 by potabaga          #+#    #+#             */
-/*   Updated: 2025/05/20 17:21:25 by potabaga         ###   ########.fr       */
+/*   Created: 2025/04/24 19:19:39 by jinliang          #+#    #+#             */
+/*   Updated: 2025/05/13 16:05:28 by jinliang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,14 @@
 
 char	*ft_strrchr(const char *s, int c)
 {
-	const char	*last = NULL;
+	int	i;
 
-	while (*s)
+	i = ft_strlen(s);
+	while (i >= 0)
 	{
-		if (*s == (char)c)
-			last = s;
-		s++;
+		if (s[i] == (unsigned char)c)
+			return ((char *)&s[i]);
+		i--;
 	}
-	if (*s == (char) c)
-		last = s;
-	return ((char *) last);
+	return (NULL);
 }
-/*
-int	main()
-{	
-	char buf[] = "campus campus";
-	char *ptr;
-	int c = 'm';
-	ptr = ft_strrchr(buf, c);
-	printf("last occurence of %c in '%s' is '%s'\n", c, buf, ptr);
-	return (0);
-}*/
